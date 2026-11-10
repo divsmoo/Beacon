@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Beacon | Support guide for single parents in Singapore</title>
-  <meta name="description" content="Beacon helps low-income unwed single parents in Singapore find out which support may apply to them and their children, and what to do next.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Beacon - support guide for single parents in Singapore</title>
+  <meta name="description" content="Beacon helps single parents in Singapore find out which support may apply to them and their children, and what to do next.">
+  <meta name="theme-color" content="#9B1C1C">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
 
   <script defer src="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/chat-messenger.js"></script>
   <link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-default.css">
@@ -12,128 +17,427 @@
 
   <style>
     :root {
-      --maroon: #6E0A0A;
-      --cream: #FFF8F2;
-      --ink: #3a0505;
-      --soft: #f3e6e1;
-      --muted: #7a5a50;
+      --red: #9B1C1C;
+      --red-dark: #7A1414;
+      --red-tint: #FBF1F0;
+      --bg: #FAF9F7;
+      --surface: #FFFFFF;
+      --ink: #1F1B1A;
+      --muted: #5E5754;
+      --line: #E6E1DD;
+      --radius: 14px;
     }
+
     * {
       box-sizing: border-box;
     }
+
+    html,
     body {
       margin: 0;
-      background: var(--cream);
+      background: var(--bg);
       color: var(--ink);
-      font-family: Helvetica, Arial, sans-serif;
-      line-height: 1.5;
+      font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-text-size-adjust: 100%;
     }
-    .wrap {
-      max-width: 860px;
+
+    a {
+      color: var(--red);
+    }
+
+    /* ---------- Page layout ---------- */
+
+    .page {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 20px 140px;
+      padding: 32px 32px 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 440px;
+      grid-template-areas:
+        "intro chat"
+        "info  chat";
+      grid-template-rows: auto 1fr;
+      column-gap: 56px;
     }
+
+    .intro {
+      grid-area: intro;
+    }
+
+    .info {
+      grid-area: info;
+    }
+
+    .chat-col {
+      grid-area: chat;
+    }
+
+    /* ---------- Left side ---------- */
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--red);
+      margin-bottom: 40px;
+    }
+
+    .brand-mark {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 5px var(--red-tint);
+    }
+
     h1 {
-      font-size: 56px;
-      font-style: italic;
-      color: var(--maroon);
-      margin: 0;
+      font-family: "Source Serif 4", Georgia, serif;
+      font-weight: 600;
+      font-size: 44px;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      margin: 0 0 16px;
+      max-width: 15ch;
     }
-    .tagline {
-      font-size: 22px;
+
+    .lede {
+      font-size: 18px;
       color: var(--muted);
-      margin: 6px 0 28px;
+      max-width: 52ch;
+      margin: 0 0 36px;
     }
-    .start {
-      background: var(--maroon);
-      color: #fff;
-      border-radius: 16px;
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    .topics {
+      list-style: none;
+      margin: 0 0 36px;
+      padding: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .topics li {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topics strong {
+      font-weight: 600;
+    }
+
+    .topics span {
+      color: var(--muted);
+    }
+
+    .limits {
+      color: var(--muted);
+      max-width: 60ch;
+      margin: 0 0 36px;
+    }
+
+    .urgent {
+      background: var(--red-tint);
+      border-left: 3px solid var(--red);
+      border-radius: 0 var(--radius) var(--radius) 0;
       padding: 18px 22px;
-      font-size: 19px;
       margin-bottom: 28px;
     }
-    .grid {
+
+    .urgent h2 {
+      font-size: 16px;
+      margin: 0 0 10px;
+      color: var(--red-dark);
+    }
+
+    .urgent dl {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-    .card {
-      background: #fff;
-      border: 2px solid #e3cfc4;
-      border-radius: 16px;
-      padding: 18px 22px;
-    }
-    .card h2 {
-      font-size: 20px;
-      color: var(--maroon);
-      margin: 0 0 8px;
-    }
-    .card ul {
+      grid-template-columns: auto 1fr;
+      gap: 6px 18px;
       margin: 0;
-      padding-left: 20px;
     }
-    .crisis {
-      margin-top: 22px;
-      background: #fdecea;
-      border: 2px dashed #c0392b;
-      border-radius: 16px;
-      padding: 16px 22px;
+
+    .urgent dt {
+      font-weight: 600;
+      white-space: nowrap;
     }
-    .crisis b {
-      color: #c0392b;
+
+    .urgent dt a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(155, 28, 28, 0.35);
     }
-    .note {
-      margin-top: 22px;
+
+    .urgent dd {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .footnote {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 62ch;
+      margin: 0;
+    }
+
+    /* ---------- Chat column ---------- */
+
+    .chat-col {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      height: calc(100vh - 48px);
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chat-head p {
+      margin: 0;
       font-size: 14px;
       color: var(--muted);
     }
-    @media (max-width: 640px) {
-      h1 {
-        font-size: 42px;
-      }
-      .grid {
+
+    .popout-btn {
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--red);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    .popout-btn:hover {
+      border-color: var(--red);
+    }
+
+    .chat-shell {
+      flex: 1;
+      min-height: 0;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 12px 32px -18px rgba(60, 20, 20, 0.35);
+    }
+
+    /* Pull the Google widget out of its default floating corner
+       and make it fill our chat box instead. */
+    .chat-shell chat-messenger {
+      position: relative !important;
+      inset: auto !important;
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: auto !important;
+      --chat-messenger-color--primary: #9B1C1C;
+      --chat-messenger-color--link: #9B1C1C;
+      --chat-messenger-font-family: "IBM Plex Sans", system-ui, sans-serif;
+      --chat-messenger-shape--corner-value-extra-large: 0px;
+      --chat-messenger-elevation: none;
+    }
+
+    .chat-shell chat-messenger-container {
+      position: relative !important;
+      inset: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      max-width: none !important;
+      height: 100% !important;
+      max-height: none !important;
+    }
+
+    /* ---------- Pop-out (full screen chat) ---------- */
+
+    body.popped {
+      overflow: hidden;
+    }
+
+    body.popped .chat-col {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      height: auto;
+      min-height: 0;
+      padding: 16px;
+      background: rgba(31, 27, 26, 0.55);
+    }
+
+    body.popped .chat-head {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto 10px;
+    }
+
+    body.popped .chat-head p {
+      color: #fff;
+    }
+
+    body.popped .popout-btn {
+      background: #fff;
+    }
+
+    body.popped .chat-shell {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ---------- Phones and small tablets ---------- */
+
+    @media (max-width: 900px) {
+      .page {
         grid-template-columns: 1fr;
+        grid-template-areas:
+          "intro"
+          "chat"
+          "info";
+        grid-template-rows: auto;
+        padding: 20px 16px 32px;
+      }
+
+      .brand {
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: 30px;
+        max-width: none;
+        margin-bottom: 8px;
+      }
+
+      .lede {
+        font-size: 16px;
+        margin-bottom: 18px;
+      }
+
+      .chat-col {
+        position: relative;
+        top: 0;
+        height: 78vh;
+        height: 78svh;
+        min-height: 480px;
+        margin-bottom: 36px;
+      }
+
+      .topics li {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      body.popped .chat-col {
+        padding: 0;
+        background: var(--bg);
+      }
+
+      body.popped .chat-head {
+        padding: 12px 16px 0;
+      }
+
+      body.popped .chat-head p {
+        color: var(--muted);
+      }
+
+      body.popped .chat-shell {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Beacon</h1>
-    <p class="tagline">A judgement-free guide for single parents in Singapore: find out what support may apply to you and your child, and what to do next.</p>
+  <main class="page">
 
-    <div class="start">
-      &#128172; Tap the chat button at the bottom right of the screen and say <b>"hi"</b> to start. You don't need to share your name or NRIC, and you can skip any question.
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>Beacon can</h2>
-        <ul>
-          <li>Explain support schemes in simple language</li>
-          <li>Suggest schemes you may be eligible for</li>
-          <li>Tell you what documents to prepare and where to apply</li>
-          <li>Explain what changes from April 2027</li>
-          <li>Point you to a Social Service Office or Family Service Centre</li>
-        </ul>
+    <header class="intro">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Beacon
       </div>
-      <div class="card">
-        <h2>Beacon can't</h2>
-        <ul>
-          <li>Decide whether you are eligible</li>
-          <li>Apply for schemes on your behalf</li>
-          <li>Give legal, medical or tax advice</li>
-          <li>Replace a social worker</li>
-        </ul>
+      <h1>Support for single parents, explained simply.</h1>
+      <p class="lede">Find out what help may be available for you and your child in Singapore, and what to do next. No name or NRIC needed, and you can skip any question.</p>
+    </header>
+
+    <aside class="chat-col" aria-label="Chat with Beacon">
+      <div class="chat-head">
+        <p>Type <strong>hi</strong> to start</p>
+        <button class="popout-btn" id="popout" type="button" aria-pressed="false">Full screen</button>
       </div>
-    </div>
+      <div class="chat-shell">
+        <chat-messenger url-allowlist="*" color-scheme="light">
+          <chat-messenger-container chat-title="Beacon" chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png">
+            <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
+          </chat-messenger-container>
+        </chat-messenger>
+      </div>
+    </aside>
 
-    <div class="crisis">
-      <b>&#9888; In an emergency:</b> Police 999 &middot; Ambulance 995 &middot; ComCare Hotline 1800-222-0000 &middot; NAVH (violence or abuse) 1800-777-0000 &middot; Samaritans of Singapore 1767
-    </div>
+    <section class="info">
+      <p class="section-label">What you can ask about</p>
+      <ul class="topics">
+        <li>
+          <strong>Money</strong>
+          <span>ComCare assistance, the Child Development Account (CDA) and the MediSave Grant for Newborns</span>
+        </li>
+        <li>
+          <strong>Childcare</strong>
+          <span>Preschool and infant care subsidies, and KidSTART for children up to age 6</span>
+        </li>
+        <li>
+          <strong>Housing</strong>
+          <span>HDB rental and purchase options, and how appeals work</span>
+        </li>
+        <li>
+          <strong>April 2027 changes</strong>
+          <span>What the new SG Child Support Package means for you, and what to prepare now</span>
+        </li>
+      </ul>
 
-    <p class="note">Beacon is a student prototype built for COR2221 AI &amp; Humanity at Singapore Management University. Information is based on official sources checked in November 2026, but rules can change, so please always confirm with the relevant agency.</p>
-  </div>
+      <p class="section-label">Good to know</p>
+      <p class="limits">Beacon explains schemes and next steps using official information. It can't decide if you are eligible, apply for you, or give legal or medical advice. For your own case, a Social Service Office or Family Service Centre can help.</p>
+
+      <div class="urgent">
+        <h2>Need help right now?</h2>
+        <dl>
+          <dt><a href="tel:999">999</a> / <a href="tel:995">995</a></dt>
+          <dd>Police / Ambulance</dd>
+          <dt><a href="tel:18002220000">1800-222-0000</a></dt>
+          <dd>ComCare Hotline, for no food, money or place to stay</dd>
+          <dt><a href="tel:18007770000">1800-777-0000</a></dt>
+          <dd>NAVH, for violence or abuse (24 hours)</dd>
+          <dt><a href="tel:1767">1767</a></dt>
+          <dd>Samaritans of Singapore (24 hours)</dd>
+        </dl>
+      </div>
+
+      <p class="footnote">Beacon is a student prototype made for COR2221 AI &amp; Humanity at Singapore Management University. Information was checked against official sources in November 2026. Rules can change, so please confirm with the relevant agency.</p>
+    </section>
+
+  </main>
 
   <script>
     window.addEventListener("chat-messenger-loaded", () => {
@@ -147,14 +451,24 @@
         }),
       );
     });
-  </script>
 
-  <chat-messenger url-allowlist="*" color-scheme="light">
-    <chat-messenger-container chat-title="Beacon" chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png">
-      <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
-      <chat-toggle-dialog-button slot="titlebar-actions" title-text-expanded="Collapse" title-text-collapsed="Expand"></chat-toggle-dialog-button>
-      <chat-messenger-close-button slot="titlebar-actions" title-text="Close"></chat-messenger-close-button>
-    </chat-messenger-container>
-  </chat-messenger>
+    const popoutBtn = document.getElementById("popout");
+
+    function setPopped(on) {
+      document.body.classList.toggle("popped", on);
+      popoutBtn.textContent = on ? "Exit full screen" : "Full screen";
+      popoutBtn.setAttribute("aria-pressed", String(on));
+    }
+
+    popoutBtn.addEventListener("click", () => {
+      setPopped(!document.body.classList.contains("popped"));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setPopped(false);
+      }
+    });
+  </script>
 </body>
 </html>
