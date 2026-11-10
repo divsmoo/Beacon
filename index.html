@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beacon | Support guide for single parents in Singapore</title>
+  <meta name="description" content="Beacon helps low-income unwed single parents in Singapore find out which support may apply to them and their children, and what to do next.">
+
+  <script defer src="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/chat-messenger.js"></script>
+  <link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-default.css">
+  <link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-layout.css">
+
+  <style>
+    :root {
+      --maroon: #6E0A0A;
+      --cream: #FFF8F2;
+      --ink: #3a0505;
+      --soft: #f3e6e1;
+      --muted: #7a5a50;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 20px 140px;
+    }
+    h1 {
+      font-size: 56px;
+      font-style: italic;
+      color: var(--maroon);
+      margin: 0;
+    }
+    .tagline {
+      font-size: 22px;
+      color: var(--muted);
+      margin: 6px 0 28px;
+    }
+    .start {
+      background: var(--maroon);
+      color: #fff;
+      border-radius: 16px;
+      padding: 18px 22px;
+      font-size: 19px;
+      margin-bottom: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .card {
+      background: #fff;
+      border: 2px solid #e3cfc4;
+      border-radius: 16px;
+      padding: 18px 22px;
+    }
+    .card h2 {
+      font-size: 20px;
+      color: var(--maroon);
+      margin: 0 0 8px;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .crisis {
+      margin-top: 22px;
+      background: #fdecea;
+      border: 2px dashed #c0392b;
+      border-radius: 16px;
+      padding: 16px 22px;
+    }
+    .crisis b {
+      color: #c0392b;
+    }
+    .note {
+      margin-top: 22px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 42px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Beacon</h1>
+    <p class="tagline">A judgement-free guide for single parents in Singapore: find out what support may apply to you and your child, and what to do next.</p>
+
+    <div class="start">
+      &#128172; Tap the chat button at the bottom right of the screen and say <b>"hi"</b> to start. You don't need to share your name or NRIC, and you can skip any question.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Beacon can</h2>
+        <ul>
+          <li>Explain support schemes in simple language</li>
+          <li>Suggest schemes you may be eligible for</li>
+          <li>Tell you what documents to prepare and where to apply</li>
+          <li>Explain what changes from April 2027</li>
+          <li>Point you to a Social Service Office or Family Service Centre</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Beacon can't</h2>
+        <ul>
+          <li>Decide whether you are eligible</li>
+          <li>Apply for schemes on your behalf</li>
+          <li>Give legal, medical or tax advice</li>
+          <li>Replace a social worker</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="crisis">
+      <b>&#9888; In an emergency:</b> Police 999 &middot; Ambulance 995 &middot; ComCare Hotline 1800-222-0000 &middot; NAVH (violence or abuse) 1800-777-0000 &middot; Samaritans of Singapore 1767
+    </div>
+
+    <p class="note">Beacon is a student prototype built for COR2221 AI &amp; Humanity at Singapore Management University. Information is based on official sources checked in November 2026, but rules can change, so please always confirm with the relevant agency.</p>
+  </div>
+
+  <script>
+    window.addEventListener("chat-messenger-loaded", () => {
+      chatSdk.registerContext(
+        chatSdk.prebuilts.ces.createContext({
+          deploymentName: "projects/669612121545/locations/us/apps/9a35a1df-01e9-4752-b38d-7a401333e48b/deployments/b29f5179-7041-4766-b551-178a540df430",
+          tokenBroker: {
+            enableTokenBroker: true,
+            enableRecaptcha: false
+          }
+        }),
+      );
+    });
+  </script>
+
+  <chat-messenger url-allowlist="*" color-scheme="light">
+    <chat-messenger-container chat-title="Beacon" chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png">
+      <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
+      <chat-toggle-dialog-button slot="titlebar-actions" title-text-expanded="Collapse" title-text-collapsed="Expand"></chat-toggle-dialog-button>
+      <chat-messenger-close-button slot="titlebar-actions" title-text="Close"></chat-messenger-close-button>
+    </chat-messenger-container>
+  </chat-messenger>
+</body>
+</html>
