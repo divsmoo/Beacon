@@ -228,8 +228,36 @@
       padding: 6px 14px;
     }
 
+    .newtab-link {
+      font-family: inherit;
+      background: transparent;
+      cursor: pointer;
+    }
+
     .newtab-link:hover {
       border-color: var(--red);
+    }
+
+    /* Expanded chat (laptop): the info hides and the chat widens.
+       The chat stays in the same place on the page, so the
+       conversation carries on without restarting. */
+    body.expanded .page {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "chat";
+      max-width: 960px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+    body.expanded .intro,
+    body.expanded .info {
+      display: none;
+    }
+
+    body.expanded .chat-col {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
     }
 
     .chat-shell {
@@ -369,7 +397,7 @@
       <!-- Laptop: chat sits inside the page -->
       <div class="chat-head">
         <p>Type <strong>hi</strong> to start</p>
-        <a class="newtab-link" href="chat.html" target="_blank" rel="noopener">Open in new tab</a>
+        <button class="newtab-link" id="expand-btn" type="button" aria-pressed="false">Expand chat</button>
       </div>
       <div class="chat-shell" id="chat-shell"></div>
 
@@ -449,6 +477,27 @@
             }
           }),
         );
+      });
+
+      const expandBtn = document.getElementById("expand-btn");
+
+      function setExpanded(on) {
+        document.body.classList.toggle("expanded", on);
+        expandBtn.textContent = on ? "Back to page" : "Expand chat";
+        expandBtn.setAttribute("aria-pressed", String(on));
+        window.scrollTo(0, 0);
+        // Let the chat widget re-measure its new size
+        window.dispatchEvent(new Event("resize"));
+      }
+
+      expandBtn.addEventListener("click", () => {
+        setExpanded(!document.body.classList.contains("expanded"));
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setExpanded(false);
+        }
       });
     }
   </script>
