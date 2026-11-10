@@ -193,7 +193,7 @@
       margin: 0;
     }
 
-    /* ---------- Chat column ---------- */
+    /* ---------- Chat column (laptop / desktop) ---------- */
 
     .chat-col {
       position: sticky;
@@ -218,19 +218,17 @@
       color: var(--muted);
     }
 
-    .popout-btn {
-      font: inherit;
+    .newtab-link {
       font-size: 14px;
       font-weight: 500;
       color: var(--red);
-      background: transparent;
+      text-decoration: none;
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 6px 14px;
-      cursor: pointer;
     }
 
-    .popout-btn:hover {
+    .newtab-link:hover {
       border-color: var(--red);
     }
 
@@ -270,40 +268,9 @@
       max-height: none !important;
     }
 
-    /* ---------- Pop-out (full screen chat) ---------- */
-
-    body.popped {
-      overflow: hidden;
-    }
-
-    body.popped .chat-col {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      height: auto;
-      min-height: 0;
-      padding: 16px;
-      background: rgba(31, 27, 26, 0.55);
-    }
-
-    body.popped .chat-head {
-      max-width: 720px;
-      width: 100%;
-      margin: 0 auto 10px;
-    }
-
-    body.popped .chat-head p {
-      color: #fff;
-    }
-
-    body.popped .popout-btn {
-      background: #fff;
-    }
-
-    body.popped .chat-shell {
-      max-width: 720px;
-      width: 100%;
-      margin: 0 auto;
+    /* Phone launcher card: hidden on laptops */
+    .mobile-launch {
+      display: none;
     }
 
     /* ---------- Phones and small tablets ---------- */
@@ -331,41 +298,57 @@
 
       .lede {
         font-size: 16px;
-        margin-bottom: 18px;
+        margin-bottom: 20px;
       }
 
+      /* On phones the chat opens as its own full page instead of
+         being squeezed into the page, so nothing gets covered. */
       .chat-col {
-        position: relative;
-        top: 0;
-        height: 78vh;
-        height: 78svh;
-        min-height: 480px;
+        position: static;
+        height: auto;
+        min-height: 0;
         margin-bottom: 36px;
+      }
+
+      .chat-head,
+      .chat-shell {
+        display: none;
+      }
+
+      .mobile-launch {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: 0 12px 32px -18px rgba(60, 20, 20, 0.35);
+      }
+
+      .mobile-launch p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .mobile-launch a {
+        display: block;
+        text-align: center;
+        background: var(--red);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 17px;
+        border-radius: 999px;
+        padding: 14px 18px;
+      }
+
+      .mobile-launch a:active {
+        background: var(--red-dark);
       }
 
       .topics li {
         grid-template-columns: 1fr;
         gap: 2px;
-      }
-
-      body.popped .chat-col {
-        padding: 0;
-        background: var(--bg);
-      }
-
-      body.popped .chat-head {
-        padding: 12px 16px 0;
-      }
-
-      body.popped .chat-head p {
-        color: var(--muted);
-      }
-
-      body.popped .chat-shell {
-        border-radius: 0;
-        border-left: 0;
-        border-right: 0;
-        border-bottom: 0;
       }
     }
   </style>
@@ -383,16 +366,17 @@
     </header>
 
     <aside class="chat-col" aria-label="Chat with Beacon">
+      <!-- Laptop: chat sits inside the page -->
       <div class="chat-head">
         <p>Type <strong>hi</strong> to start</p>
-        <button class="popout-btn" id="popout" type="button" aria-pressed="false">Full screen</button>
+        <a class="newtab-link" href="chat.html" target="_blank" rel="noopener">Open in new tab</a>
       </div>
-      <div class="chat-shell">
-        <chat-messenger url-allowlist="*" color-scheme="light">
-          <chat-messenger-container chat-title="Beacon" chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png">
-            <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
-          </chat-messenger-container>
-        </chat-messenger>
+      <div class="chat-shell" id="chat-shell"></div>
+
+      <!-- Phone: one big button that opens the full-screen chat -->
+      <div class="mobile-launch">
+        <p>Opens a full-screen chat. Type <strong>hi</strong> to start, and use your back button to return here.</p>
+        <a href="chat.html">Chat with Beacon</a>
       </div>
     </aside>
 
@@ -439,36 +423,34 @@
 
   </main>
 
+  <!-- The chat widget, only added to the page on laptops -->
+  <template id="chat-template">
+    <chat-messenger url-allowlist="*" color-scheme="light">
+      <chat-messenger-container chat-title="Beacon" chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png">
+        <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
+      </chat-messenger-container>
+    </chat-messenger>
+  </template>
+
   <script>
-    window.addEventListener("chat-messenger-loaded", () => {
-      chatSdk.registerContext(
-        chatSdk.prebuilts.ces.createContext({
-          deploymentName: "projects/669612121545/locations/us/apps/9a35a1df-01e9-4752-b38d-7a401333e48b/deployments/b29f5179-7041-4766-b551-178a540df430",
-          tokenBroker: {
-            enableTokenBroker: true,
-            enableRecaptcha: false
-          }
-        }),
-      );
-    });
+    const isLaptop = window.matchMedia("(min-width: 901px)").matches;
 
-    const popoutBtn = document.getElementById("popout");
+    if (isLaptop) {
+      const template = document.getElementById("chat-template");
+      document.getElementById("chat-shell").appendChild(template.content.cloneNode(true));
 
-    function setPopped(on) {
-      document.body.classList.toggle("popped", on);
-      popoutBtn.textContent = on ? "Exit full screen" : "Full screen";
-      popoutBtn.setAttribute("aria-pressed", String(on));
+      window.addEventListener("chat-messenger-loaded", () => {
+        chatSdk.registerContext(
+          chatSdk.prebuilts.ces.createContext({
+            deploymentName: "projects/669612121545/locations/us/apps/9a35a1df-01e9-4752-b38d-7a401333e48b/deployments/b29f5179-7041-4766-b551-178a540df430",
+            tokenBroker: {
+              enableTokenBroker: true,
+              enableRecaptcha: false
+            }
+          }),
+        );
+      });
     }
-
-    popoutBtn.addEventListener("click", () => {
-      setPopped(!document.body.classList.contains("popped"));
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        setPopped(false);
-      }
-    });
   </script>
 </body>
 </html>
