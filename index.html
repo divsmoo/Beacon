@@ -500,6 +500,20 @@
         }
       });
     }
+  
+    // Open links from the chat in a new tab, so the conversation is not lost.
+    document.addEventListener("click", (event) => {
+      const link = event.composedPath().find((el) => el.tagName === "A" && el.href);
+      if (!link) {
+        return;
+      }
+      const url = new URL(link.href, window.location.href);
+      const isWebLink = url.protocol === "http:" || url.protocol === "https:";
+      if (isWebLink && url.origin !== window.location.origin) {
+        event.preventDefault();
+        window.open(url.href, "_blank", "noopener");
+      }
+    }, true);
   </script>
 </body>
 </html>
